@@ -33,6 +33,7 @@
     "redux-observable": "^2.0.0",
     "rxjs": "6.x.x",
     "typescript": "^4.4.2",
+    "use-places-autocomplete": "^4.0.0",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
