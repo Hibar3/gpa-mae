@@ -1,4 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { apiKey } from "../../config";
 
@@ -18,7 +20,7 @@ export const CustomMap = () => {
     googleMapsApiKey: apiKey,
   });
   const [map, setMap] = useState(null);
-  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+  const center = useMemo(() => ({ lat: 45, lng: -80 }), []);
   const onLoad = useCallback(function callback(value) {
     const bounds = new window.google.maps.LatLngBounds(center);
     value.fitBounds(bounds);
@@ -44,7 +46,9 @@ export const CustomMap = () => {
       <Marker position={center} />
     </GoogleMap>
   ) : (
-    <></>
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
   );
 };
 
