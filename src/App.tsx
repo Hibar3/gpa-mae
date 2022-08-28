@@ -24,7 +24,7 @@ const App: React.FC = () => {
     <div>
       <Header />
       <h2>Discover places</h2>
-      {/* <AutoComplete /> */}
+      <AutoComplete />
       <div style={{ height: "100vh", width: "100%" }}>
         <CustomMap />
       </div>
