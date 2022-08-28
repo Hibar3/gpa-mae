@@ -21,6 +21,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "axios": "^0.27.2",
     "fast-equals": "^4.0.3",
     "google-map-react": "^2.2.0",
     "lodash": "^4.17.21",
