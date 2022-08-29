@@ -16,6 +16,9 @@ export const rootStore = () => {
   const store = configureStore({
     reducer: rootReducer,
     preloadedState: initialState,
+    enhancers: [
+      composeWithDevTools(applyMiddleware(epicsMiddleware, loggerMiddleware)),
+    ],
     middleware: [thunk, routerMiddleware(history)],
   });
 

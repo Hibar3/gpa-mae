@@ -1,6 +1,5 @@
 // @ts-nocheck - may need to be at the start of file
 import { combineEpics, ofType } from "redux-observable";
-import { combineReducers } from "redux";
 import { ajax } from "rxjs/ajax";
 import { of } from "rxjs";
 import {
