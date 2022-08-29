@@ -1801,6 +1801,14 @@
   resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-2.11.8.tgz#9b830b405cc203b305ac6f771da2e307ad30515e"
   integrity sha512-OEcdbTXEgPwdpGvVuSrhIhjcZPhlzPz2TvaKCBLraf1PKiDyLOPhlTVRlbIziLiu0xN89pJcill1w9UVIVFF+Q==
 
+"@redux-devtools/extension@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-3.2.3.tgz#589361d9a62326558c39c8a2e09c4acdbe6393e0"
+  integrity sha512-y90IIqdQF6kIkP4KfBCfiFrnu9KMrEPUmcnb5A3v12tjfwRJUXecX8vCEbFqqJLjOomvVmis0Aal7QdFjk6CRQ==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    immutable "^4.0.0"
+
 "@redux-saga/core@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@redux-saga/core/-/core-1.2.1.tgz#3680989621517d075a2cc85e0d2744b682990ed8"
@@ -2346,7 +2354,7 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@^18.0.0":
+"@types/react-dom@^18.0.0", "@types/react-dom@^18.0.2":
   version "18.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
   integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
@@ -2367,7 +2375,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.0":
+"@types/react@*", "@types/react@^18.0.6":
   version "18.0.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.17.tgz#4583d9c322d67efe4b39a935d223edcc7050ccf4"
   integrity sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ==
@@ -5267,6 +5275,11 @@ immer@^9.0.7:
   version "9.0.15"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.15.tgz#0b9169e5b1d22137aba7d43f8a81a495dd1b62dc"
   integrity sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==
+
+immutable@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.1.0.tgz#f795787f0db780183307b9eb2091fcac1f6fafef"
+  integrity sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
