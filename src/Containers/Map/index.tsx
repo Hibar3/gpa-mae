@@ -3,30 +3,29 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { apiKey } from "../../config";
+import { Props } from "./props";
 
 const containerStyle = {
   flex: 1,
-  width: "500px",
+  width: "100%",
   height: "500px",
 };
+const center = { lat: -34.397, lng: 150.64 };
 
-export const CustomMap = () => {
+export const CustomMap: React.FC<Props> = (props) => {
   //======VARIABLE
+  const { isLoaded } = props;
   const zoom = 5;
 
   //======STATES
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: apiKey,
-  });
   const [map, setMap] = useState(null);
-  const center = useMemo(() => ({ lat: 45, lng: -80 }), []);
+  // const center = useMemo(() => ({ lat: 45, lng: -80 }), []);
   const onLoad = useCallback(function callback(value) {
     const bounds = new window.google.maps.LatLngBounds(center);
     value.fitBounds(bounds);
     setMap(value);
   }, []);
-  const onUnmount = React.useCallback(function callback(map) {
+  const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 

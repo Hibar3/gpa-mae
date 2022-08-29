@@ -10,35 +10,19 @@ import throttle from "lodash/throttle";
 import { apiKey } from "../../config";
 import { PlaceType, Props } from "./props";
 
-const loadScript = (src: string, position: HTMLElement | null, id: string) => {
-  if (!position) {
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  position.appendChild(script);
-};
-
 const autocompleteService = { current: null };
 
-export const AutoComplete: React.FC<Props> = () => {
+export const AutoComplete: React.FC<Props> = (props) => {
+  const { isLoaded } = props;
   const [value, setValue] = useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
   const loaded = useRef(false);
 
   if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`,
-        document.querySelector("head"),
-        "google-maps"
-      );
+    if (!document.querySelector("#google-map-script")) {
     }
-
+    console.log("loading", isLoaded);
     loaded.current = true;
   }
 
@@ -100,7 +84,7 @@ export const AutoComplete: React.FC<Props> = () => {
   return (
     <Autocomplete
       id="google-map-demo"
-      sx={{ width: 300 }}
+      sx={{ width: '50%'}}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
       }

@@ -1,10 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
+import { useJsApiLoader } from "@react-google-maps/api";
 import AutoComplete from "./Components/Autocomplete";
 import Header from "./Components/Header";
 import CustomMap from "./Containers/Map";
+import { apiKey } from "./config";
 
 const App: React.FC = () => {
+  //=====HOOKS
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: apiKey,
+    libraries: ["places"],
+  });
+  const [loading, setLoading] = useState(false);
+
   //======VARIABLE
   const center = { lat: -34.397, lng: 150.644 };
   const zoom = 4;
@@ -25,8 +35,8 @@ const App: React.FC = () => {
       <Header />
       <h2>Discover places</h2>
       <div style={{ height: "100vh", width: "100%" }}>
-        <AutoComplete />
-        <CustomMap />
+        <AutoComplete isLoaded={isLoaded} />
+        <CustomMap isLoaded={isLoaded} />
       </div>
     </div>
   );
