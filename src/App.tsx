@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { useJsApiLoader } from "@react-google-maps/api";
-import AutoComplete from "./Components/Autocomplete";
 import Header from "./Components/Header";
 import CustomMap from "./Containers/Map";
+import SearchHistory from "./Containers/SearchHistory";
 import { apiKey } from "./config";
 
 const App: React.FC = () => {
@@ -31,12 +31,19 @@ const App: React.FC = () => {
 
   //===========VIEW
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <Header />
       <h2>Discover places</h2>
       <div style={{ height: "100vh", width: "100%" }}>
-        <AutoComplete isLoaded={isLoaded} />
         <CustomMap isLoaded={isLoaded} />
+        <div
+          style={{
+            justifyContent: "center",
+            margin: 20,
+          }}
+        >
+          <SearchHistory isLoaded={isLoaded} />
+        </div>
       </div>
     </div>
   );

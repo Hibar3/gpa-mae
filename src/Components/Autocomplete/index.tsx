@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, {  } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -6,78 +6,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
-import throttle from "lodash/throttle";
 import { PlaceType, Props } from "./props";
-import { fetchAutocomplete } from "../../api";
-import { fetchPlaces } from "../../redux/actions";
-import { useDispatch } from "react-redux";
-
-const autocompleteService = { current: null };
 
 export const AutoComplete: React.FC<Props> = (props) => {
-  const { isLoaded } = props;
-  const [value, setValue] = useState<PlaceType | null>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState<readonly PlaceType[]>([]);
-  const loaded = useRef(false);
-  const dispatch = useDispatch();
-
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-map-script")) {
-    }
-    console.log("loading", isLoaded);
-    loaded.current = true;
-  }
-
-  const onChange = (newValue) => {
-    setOptions(newValue ? [newValue, ...options] : options);
-    setValue(newValue);
-    dispatch(fetchPlaces(newValue));
-  };
-
-  useEffect(() => {
-    let active = true;
-
-    if (!autocompleteService.current && (window as any).google) {
-      autocompleteService.current = new (
-        window as any
-      ).google.maps.places.AutocompleteService();
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
-
-    if (inputValue === "") {
-      setOptions(value ? [value] : []);
-      return undefined;
-    }
-
-    fetchAutocomplete(
-      autocompleteService?.current,
-      { input: inputValue },
-      (results?: readonly PlaceType[]) => {
-        if (active) {
-          let newOptions: readonly PlaceType[] = [];
-
-          if (value) {
-            newOptions = [value];
-            console.log("line 69", newOptions);
-          }
-
-          if (results) {
-            console.log("line 73", results);
-            newOptions = [...newOptions, ...results];
-          }
-
-          setOptions(newOptions);
-        }
-      }
-    );
-
-    return () => {
-      active = false;
-    };
-  }, [value, inputValue, fetchAutocomplete]);
+  const { isLoaded, value, options, onChange, onInputChange } = props;
 
   return (
     <Autocomplete
@@ -92,12 +24,14 @@ export const AutoComplete: React.FC<Props> = (props) => {
       includeInputInList
       filterSelectedOptions
       value={value}
-      onChange={(event: any, newValue: PlaceType | null) => onChange(newValue)}
+      onChange={(event?: any, newValue?: PlaceType | null) =>
+        onChange(newValue)
+      }
       onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
+        onInputChange(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth />
+        <TextField {...params} label="Search location" fullWidth />
       )}
       renderOption={(props, option) => {
         const matches =
@@ -143,22 +77,3 @@ export const AutoComplete: React.FC<Props> = (props) => {
 };
 
 export default AutoComplete;
-
-/* <GooglePlacesAutocomplete
-      debounce={800}
-      apiKey={apiKey}
-      // onSelect={handleAddress}
-      // renderSuggestions={(active, suggestions, onSelectSuggestion) => (
-      //   <div className="suggestions-container">
-      //     {suggestions.map((suggestion) => (
-      //       <div
-      //         className="suggestion"
-      //         onClick={(event) => onSelectSuggestion(suggestion, event)}
-      //       >
-      //         {suggestion.description}
-      //       </div>
-      //     ))}
-      //   </div>
-      // )}
-    />
-  </div> */
