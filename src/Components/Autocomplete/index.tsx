@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -6,11 +6,14 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
-import { PlaceType, Props } from "./props";
+import { Props } from "./props";
+import { PlaceType } from "../../common/types";
 
 export const AutoComplete: React.FC<Props> = (props) => {
+  //===========VARIABLE
   const { isLoaded, value, options, onChange, onInputChange } = props;
 
+  //===========VIEW
   return (
     <Autocomplete
       id="google-map-demo"

@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { PlaceType, Props } from "./props";
+import { Props } from "./props";
 import AutoComplete from "../../components/Autocomplete";
 import SearchList from "../../components/SearchList";
 import store from "../../configureStore";
 import { fetchGeoSuccess, fetchPlacesSuccess } from "../../redux/actions";
 import { getAutocomplete } from "../../api";
+import { PlaceType } from "../../common/types";
 
 const autocompleteService = { current: null };
 
 export const SearchHistory: React.FC<Props> = (props) => {
+    //===========VARIABLE
   const { isLoaded, subscribe } = props;
+
+  //===========HOOKS
   const [value, setValue] = useState<PlaceType | null | undefined>();
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
@@ -18,7 +22,6 @@ export const SearchHistory: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const searchHistory: { places: PlaceType[] } =
     store.getState()?.searches?.places;
-  console.log("searchHistory", store.getState()?.searches);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-map-script")) {
@@ -82,6 +85,7 @@ export const SearchHistory: React.FC<Props> = (props) => {
     };
   }, [value, inputValue, dispatch]);
 
+  //===========VIEW
   return (
     <div>
       <AutoComplete

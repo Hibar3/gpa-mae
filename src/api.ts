@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PlaceType } from "./components/Autocomplete/props";
+import { PlaceType } from "./common/types";
 import { apiEndpoint, apiKey } from "./config";
 
 export const postAutocomplete = async (input?: string) => {

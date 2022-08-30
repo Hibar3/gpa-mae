@@ -10,13 +10,15 @@ import { Props } from "./props";
 import { PlaceType } from "./props";
 
 export const SearchList: React.FC<Props> = (props) => {
+  //===========VARIABLES
   const { places } = props;
+
   // remove  undefined values
   const filterPlaces = filter(places, (res) => {
     if (res?.description !== undefined) return res;
   });
-  console.log(filterPlaces);
 
+  //===========VIEW
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <Divider />
