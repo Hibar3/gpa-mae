@@ -7,7 +7,7 @@ import Divider from "@mui/material/Divider";
 import map from "lodash/map";
 import filter from "lodash/filter";
 import { Props } from "./props";
-import { PlaceType } from "../Autocomplete/props";
+import { PlaceType } from "./props";
 
 export const SearchList: React.FC<Props> = (props) => {
   const { places } = props;
@@ -15,13 +15,14 @@ export const SearchList: React.FC<Props> = (props) => {
   const filterPlaces = filter(places, (res) => {
     if (res?.description !== undefined) return res;
   });
+  console.log(filterPlaces);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <Divider />
       <nav aria-label="secondary mailbox folders">
         {map(filterPlaces, (i: PlaceType, index) => (
-          <ListItem disablePadding key={index}>
+          <ListItem disablePadding key={`${i?.place_id}${index}`}>
             <ListItemButton>
               <ListItemText primary={i?.description} />
             </ListItemButton>
