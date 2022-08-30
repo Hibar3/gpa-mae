@@ -7,12 +7,13 @@ import store from "../../configureStore";
 import { fetchGeoSuccess, fetchPlacesSuccess } from "../../redux/actions";
 import { getAutocomplete } from "../../api";
 import { PlaceType } from "../../common/types";
+import { geocodeByPlaceId, getLatLng } from "react-google-places-autocomplete";
 
 const autocompleteService = { current: null };
 
 export const SearchHistory: React.FC<Props> = (props) => {
-    //===========VARIABLE
-  const { isLoaded, subscribe } = props;
+  //===========VARIABLE
+  const { isLoaded, onPlaceChanged } = props;
 
   //===========HOOKS
   const [value, setValue] = useState<PlaceType | null | undefined>();
@@ -31,10 +32,14 @@ export const SearchHistory: React.FC<Props> = (props) => {
   }
 
   //======EVENTS
-  const onInputChange = (input) => setInputValue(input);
+  const onInputChange = async (input) => setInputValue(input);
   const onChange = (newValue?: PlaceType | null) => {
     setOptions(newValue ? [newValue, ...options] : options);
     setValue(newValue);
+    geocodeByPlaceId(newValue?.place_id || "")
+      .then((res) => getLatLng(res[0]))
+      .then((res) => onPlaceChanged(res));
+
     dispatch(
       fetchPlacesSuccess({
         description: newValue?.description,

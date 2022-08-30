@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { useJsApiLoader } from "@react-google-maps/api";
 import Header from "./components/Header";
 import CustomMap from "./containers/Map";
 import SearchHistory from "./containers/SearchHistory";
 import { apiKey } from "./config";
+
+const center = { lat: -34.397, lng: 150.644 };
 
 const App: React.FC = () => {
   //=====HOOKS
@@ -13,20 +15,12 @@ const App: React.FC = () => {
     googleMapsApiKey: apiKey,
     libraries: ["places"],
   });
-  const [loading, setLoading] = useState(false);
+  const [position, setPosition] = useState(center);
+  console.log(position);
 
-  //======VARIABLE
-  const center = { lat: -34.397, lng: 150.644 };
-  const zoom = 4;
-
-  //======HELPERS
-  const handleAddress = ({ description }) => {
-    geocodeByAddress(description)
-      .then((results) => getLatLng(results[0]))
-      .then(({ lat, lng }) =>
-        console.log("Successfully got latitude and longitude", { lat, lng })
-      )
-      .catch((error) => console.error(error));
+  //======EVENTS
+  const handlePosition = (value) => {
+    setPosition(value);
   };
 
   //===========VIEW
@@ -35,14 +29,14 @@ const App: React.FC = () => {
       <Header />
       <h2>Discover places</h2>
       <div style={{ height: "100vh", width: "100%" }}>
-        <CustomMap isLoaded={isLoaded} />
+        <CustomMap isLoaded={isLoaded} position={position} />
         <div
           style={{
             justifyContent: "center",
             margin: 20,
           }}
         >
-          <SearchHistory isLoaded={isLoaded} />
+          <SearchHistory isLoaded={isLoaded} onPlaceChanged={handlePosition} />
         </div>
       </div>
     </div>

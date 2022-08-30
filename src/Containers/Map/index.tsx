@@ -8,11 +8,11 @@ const containerStyle = {
   width: "50%",
   height: "500px",
 };
-const center = { lat: -33.397, lng: 150.64 };
+const center = { lat: -34.397, lng: 150.644 };
 
 export const CustomMap: React.FC<Props> = (props) => {
   //======VARIABLE
-  const { isLoaded } = props;
+  const { isLoaded, position } = props;
   const zoom = 4;
 
   //======STATES
@@ -27,20 +27,16 @@ export const CustomMap: React.FC<Props> = (props) => {
     setMap(null);
   }, []);
 
-  const onPlaceChanged = (value?) => {
-    console.log(value);
-  };
-
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={center}
+      center={position || center}
       zoom={zoom}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
       {/* Child components, such as markers, info windows, etc. */}
-      <MarkerF position={center} />
+      <MarkerF position={position || center} />
     </GoogleMap>
   ) : (
     <Box sx={{ display: "flex" }}>

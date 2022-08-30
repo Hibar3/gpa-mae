@@ -5,5 +5,6 @@ export type Props = {
   isLoaded: boolean;
   options?: string[];
   subscribe?: Unsubscribe;
+  onPlaceChanged: (value?: { lat: number; lng: number }) => void;
   renderInput?: (value?: any) => void;
 };
