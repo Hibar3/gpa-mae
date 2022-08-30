@@ -4,25 +4,27 @@ import { PlaceType, Props } from "./props";
 import AutoComplete from "../../Components/Autocomplete";
 import SearchList from "../../Components/SearchList";
 import store from "../../configureStore";
-import { fetchPlacesSuccess } from "../../redux/actions";
-import { fetchAutocomplete } from "../../api";
+import { fetchGeoSuccess, fetchPlacesSuccess } from "../../redux/actions";
+import { getAutocomplete } from "../../api";
 
 const autocompleteService = { current: null };
 
 export const SearchHistory: React.FC<Props> = (props) => {
-  const { isLoaded } = props;
+  const { isLoaded, subscribe } = props;
   const [value, setValue] = useState<PlaceType | null | undefined>();
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
   const loaded = useRef(false);
   const dispatch = useDispatch();
-  const searchHistory: any = store.getState()?.searches?.places;
+  const searchHistory: { places: PlaceType[] } =
+    store.getState()?.searches?.places;
+  console.log("searchHistory", store.getState()?.searches);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-map-script")) {
       console.log("loading", isLoaded);
     }
-    loaded.current = true;
+    loaded.current = isLoaded;
   }
 
   //======EVENTS
@@ -34,6 +36,12 @@ export const SearchHistory: React.FC<Props> = (props) => {
       fetchPlacesSuccess({
         description: newValue?.description,
         place_id: newValue?.place_id,
+      })
+    );
+    dispatch(
+      fetchGeoSuccess({
+        address: newValue?.description,
+        placeId: newValue?.place_id,
       })
     );
   };
@@ -56,8 +64,8 @@ export const SearchHistory: React.FC<Props> = (props) => {
       return undefined;
     }
 
-    fetchAutocomplete(
-      autocompleteService?.current,
+    getAutocomplete(
+      autocompleteService.current,
       { input: inputValue },
       (results?: readonly PlaceType[]) => {
         if (active) {
@@ -72,7 +80,7 @@ export const SearchHistory: React.FC<Props> = (props) => {
     return () => {
       active = false;
     };
-  }, [value, inputValue]);
+  }, [value, inputValue, dispatch]);
 
   return (
     <div>

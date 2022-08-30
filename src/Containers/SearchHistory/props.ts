@@ -1,7 +1,10 @@
+import { Unsubscribe } from "@reduxjs/toolkit";
+
 export type Props = {
   places?: any[];
-  isLoaded?: boolean;
+  isLoaded: boolean;
   options?: string[];
+  subscribe?: Unsubscribe;
   renderInput?: (value?: any) => void;
 };
 
