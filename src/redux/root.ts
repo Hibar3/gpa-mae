@@ -46,25 +46,9 @@ export const fetchPlacesEpic = (action$, state) => {
   return action$.pipe(
     ofType(types.FETCH_PLACES),
     tap((value) => console.log("Gonna fetch", value)),
-    mergeMap((action) =>
-      ajax
-        .getJSON(
-          `${apiEndpoint.autocomplete}?input=${action?.payload?.searchTerm}&types=geocode&key=${apiKey}`
-        )
-        .pipe(
-          tap((value) => console.log(value)),
-          map((res) => actions.fetchPlacesSuccess(res?.predictions)),
-          takeUntil(
-            action$.pipe(
-              tap((value) => console.log("CANCELING", value)),
-              ofType(types.FETCH_PLACES)
-            )
-          ),
-          catchError((error) =>
-            of(actions.fetchPlacesFailure(error, action?.payload?.isServer))
-          )
-        )
-    )
+    mergeMap((action) => {
+      console.log(action)
+      return action })
   );
 };
 

@@ -1,7 +1,7 @@
 import * as types from "./types";
 
 export const fetchPlaces = (searchTerm) => {
-  console.log(searchTerm);
+  console.log("searchTearm", searchTerm);
   return { type: types.FETCH_PLACES, payload: { searchTerm } };
 };
 export const fetchPlacesSuccess = (response) => ({

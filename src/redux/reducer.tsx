@@ -1,5 +1,7 @@
 import * as types from "./types";
 import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
+import history from "../common/history";
 
 const INITIAL_STATE_PLACES = {
   search_term: "ipoh",
@@ -52,6 +54,7 @@ const geocodingReducer = (state = INITIAL_STATE_GEOCODE, { type, payload }) => {
 export const searchesReducer = combineReducers({
   places: placesReducer,
   coords: geocodingReducer,
+  router: connectRouter(history),
 });
 
 export const reducers = {
