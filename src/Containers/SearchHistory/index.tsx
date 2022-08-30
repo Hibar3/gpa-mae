@@ -7,7 +7,6 @@ import store from "../../configureStore";
 import { fetchPlacesSuccess } from "../../redux/actions";
 import { fetchAutocomplete } from "../../api";
 
-
 const autocompleteService = { current: null };
 
 export const SearchHistory: React.FC<Props> = (props) => {
@@ -18,7 +17,6 @@ export const SearchHistory: React.FC<Props> = (props) => {
   const loaded = useRef(false);
   const dispatch = useDispatch();
   const searchHistory: any = store.getState()?.searches?.places;
-  console.log("searchHistory", searchHistory);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-map-script")) {

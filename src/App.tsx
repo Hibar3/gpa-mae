@@ -31,15 +31,18 @@ const App: React.FC = () => {
 
   //===========VIEW
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <Header />
       <h2>Discover places</h2>
-      <div style={{ height: "100vh", width: "100%", flexDirection: "row" }}>
-        <div>
+      <div style={{ height: "100vh", width: "100%" }}>
+        <CustomMap isLoaded={isLoaded} />
+        <div
+          style={{
+            justifyContent: "center",
+            margin: 20,
+          }}
+        >
           <SearchHistory isLoaded={isLoaded} />
-        </div>
-        <div>
-          <CustomMap isLoaded={isLoaded} />
         </div>
       </div>
     </div>
