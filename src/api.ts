@@ -1,6 +1,4 @@
 import axios from "axios";
-import { throttle } from "lodash";
-import { useMemo } from "react";
 import { PlaceType } from "./Components/Autocomplete/props";
 import { apiEndpoint, apiKey } from "./config";
 
@@ -21,13 +19,12 @@ export const postGeocode = async (input?: string) => {
 };
 
 // A mock function to mimic making an async request for data
-export const fetchAutocomplete = async (
+export const getAutocomplete = async (
   action,
   request?: { input: string },
   callback?: (results?: readonly PlaceType[]) => void
 ) => {
   // to get google maps predictions
   const res = (action as any).getPlacePredictions(request, callback);
-  console.log("line 37", res);
   return res;
 };
