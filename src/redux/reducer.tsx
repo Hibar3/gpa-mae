@@ -2,7 +2,6 @@ import * as types from "./types";
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import history from "../common/history";
-import { SearchMapActions } from "./types";
 
 const INITIAL_STATE_PLACES = {
   description: "Kuala Lumpur",
@@ -11,8 +10,10 @@ const INITIAL_STATE_PLACES = {
 };
 
 const INITIAL_STATE_GEOCODE = {
-  searchPlaces: {
-    address: "malaysia",
+  searchTerm: {
+    address: "Kuala Lumpur",
+    placeId: "",
+    latLng: [],
     error: null,
     coords: [],
   },
@@ -22,11 +23,9 @@ const placesReducer = (
   state = INITIAL_STATE_PLACES,
   action: { type; payload }
 ) => {
-  console.log("line 21 acton", action);
   switch (action.type) {
     case types.FETCH_PLACES_SUCCESS: {
       const searchHistory = [action.payload?.searchTerm, ...state.places];
-      console.log("history", searchHistory);
       return {
         ...state,
         description: action.payload?.searchTerm?.description,
@@ -44,31 +43,44 @@ const placesReducer = (
   }
 };
 
-const geocodingReducer = (state = INITIAL_STATE_GEOCODE, { type, payload }) => {
-  switch (type) {
-    case types.FETCH_GEO_SUCCESS:
+const geocodingReducer = (
+  state = INITIAL_STATE_GEOCODE,
+  action: { type; payload }
+) => {
+  switch (action.type) {
+    case types.FETCH_GEO_SUCCESS: {
+      console.log("FETCH_GEO_SUCCESS", action?.payload);
+      const searchHistory = [
+        action.payload?.searchTerm,
+        ...state.searchTerm?.coords,
+      ];
       return {
         ...state,
-        coords: payload.coords,
+        searchTerm: {
+          coords: searchHistory,
+          address: action.payload?.searchTerm?.address,
+          placeId: action.payload?.searchTerm?.placeId,
+        },
       };
+    }
     case types.FETCH_GEO_FAILURE:
       return {
         ...state,
-        error: payload.error,
+        error: action.payload?.error,
       };
     default:
       return state;
   }
 };
 
-export const searchesReducer = combineReducers({
+export const searchReducer = combineReducers({
   places: placesReducer,
-  coords: geocodingReducer,
+  geoCode: geocodingReducer,
   router: connectRouter(history),
 });
 
 export const reducers = {
-  searches: searchesReducer,
+  searches: searchReducer,
 };
 
 export const rootReducer = combineReducers(reducers);
