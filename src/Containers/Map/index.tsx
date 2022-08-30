@@ -1,20 +1,19 @@
 import React, { useCallback, useMemo, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { apiKey } from "../../config";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { Props } from "./props";
 
 const containerStyle = {
   width: "50%",
   height: "500px",
 };
-const center = { lat: -34.397, lng: 150.64 };
+const center = { lat: -33.397, lng: 150.64 };
 
 export const CustomMap: React.FC<Props> = (props) => {
   //======VARIABLE
   const { isLoaded } = props;
-  const zoom = 5;
+  const zoom = 4;
 
   //======STATES
   const [map, setMap] = useState(null);
@@ -41,7 +40,7 @@ export const CustomMap: React.FC<Props> = (props) => {
       onUnmount={onUnmount}
     >
       {/* Child components, such as markers, info windows, etc. */}
-      <Marker position={center} />
+      <MarkerF position={center} />
     </GoogleMap>
   ) : (
     <Box sx={{ display: "flex" }}>
