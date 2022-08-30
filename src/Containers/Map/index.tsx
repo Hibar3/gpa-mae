@@ -6,8 +6,7 @@ import { apiKey } from "../../config";
 import { Props } from "./props";
 
 const containerStyle = {
-  flex: 1,
-  width: "100%",
+  width: "50%",
   height: "500px",
 };
 const center = { lat: -34.397, lng: 150.64 };

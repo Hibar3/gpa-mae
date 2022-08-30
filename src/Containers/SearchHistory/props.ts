@@ -1,9 +1,7 @@
 export type Props = {
+  places?: any[];
   isLoaded?: boolean;
-  value: any;
-  onChange: (ref) => void;
-  onInputChange: (ref) => void;
-  options: readonly PlaceType[];
+  options?: string[];
   renderInput?: (value?: any) => void;
 };
 
