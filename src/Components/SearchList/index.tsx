@@ -20,8 +20,8 @@ export const SearchList: React.FC<Props> = (props) => {
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <Divider />
       <nav aria-label="secondary mailbox folders">
-        {map(filterPlaces, (i: PlaceType) => (
-          <ListItem disablePadding>
+        {map(filterPlaces, (i: PlaceType, index) => (
+          <ListItem disablePadding key={index}>
             <ListItemButton>
               <ListItemText primary={i?.description} />
             </ListItemButton>
