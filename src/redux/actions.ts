@@ -1,13 +1,16 @@
 import * as types from "./types";
 
 export const fetchPlaces = (searchTerm) => {
-  console.log("searchTearm", searchTerm);
+  console.log("fetchPlaces", searchTerm);
   return { type: types.FETCH_PLACES, payload: { searchTerm } };
 };
-export const fetchPlacesSuccess = (response) => ({
-  type: types.FETCH_PLACES_SUCCESS,
-  payload: { response },
-});
+export const fetchPlacesSuccess = (searchTerm) => {
+  console.log("fetchPlacesSuccess", searchTerm);
+  return {
+    type: types.FETCH_PLACES_SUCCESS,
+    payload: { searchTerm },
+  };
+};
 
 export const fetchPlacesFailure = (error, places) => ({
   type: types.FETCH_PLACES_FAILURE,

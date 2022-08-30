@@ -9,14 +9,15 @@ import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { PlaceType, Props } from "./props";
 import { fetchAutocomplete } from "../../api";
-import { fetchPlaces } from "../../redux/actions";
+import { fetchPlaces, fetchPlacesSuccess } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import store from "../../configureStore";
 
 const autocompleteService = { current: null };
 
 export const AutoComplete: React.FC<Props> = (props) => {
   const { isLoaded } = props;
-  const [value, setValue] = useState<PlaceType | null>(null);
+  const [value, setValue] = useState<PlaceType | null | undefined>();
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
   const loaded = useRef(false);
@@ -29,10 +30,15 @@ export const AutoComplete: React.FC<Props> = (props) => {
     loaded.current = true;
   }
 
-  const onChange = (newValue) => {
+  const onChange = (newValue?: PlaceType | null) => {
     setOptions(newValue ? [newValue, ...options] : options);
     setValue(newValue);
-    dispatch(fetchPlaces(newValue));
+    dispatch(
+      fetchPlacesSuccess({
+        description: newValue?.description,
+        place_id: newValue?.place_id,
+      })
+    );
   };
 
   useEffect(() => {
@@ -92,12 +98,14 @@ export const AutoComplete: React.FC<Props> = (props) => {
       includeInputInList
       filterSelectedOptions
       value={value}
-      onChange={(event: any, newValue: PlaceType | null) => onChange(newValue)}
+      onChange={(event?: any, newValue?: PlaceType | null) =>
+        onChange(newValue)
+      }
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth />
+        <TextField {...params} label="Search location" fullWidth />
       )}
       renderOption={(props, option) => {
         const matches =

@@ -2,9 +2,10 @@ import * as types from "./types";
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import history from "../common/history";
+import { SearchMapActions } from "./types";
 
 const INITIAL_STATE_PLACES = {
-  search_term: "ipoh",
+  description: "Kuala Lumpur",
   places: [],
   error: null,
 };
@@ -17,17 +18,26 @@ const INITIAL_STATE_GEOCODE = {
   },
 };
 
-const placesReducer = (state = INITIAL_STATE_PLACES, { type, payload }) => {
-  switch (type) {
-    case types.FETCH_PLACES_SUCCESS:
+const placesReducer = (
+  state = INITIAL_STATE_PLACES,
+  action: { type; payload }
+) => {
+  console.log("line 21 acton", action);
+  switch (action.type) {
+    case types.FETCH_PLACES_SUCCESS: {
+      const searchHistory = [action.payload?.searchTerm, ...state.places];
+      console.log("history", searchHistory);
       return {
         ...state,
-        places: payload.response,
+        description: action.payload?.searchTerm?.description,
+        places: searchHistory,
       };
+    }
+
     case types.FETCH_PLACES_FAILURE:
       return {
         ...state,
-        error: payload.error,
+        error: action.payload?.error,
       };
     default:
       return state;
@@ -62,5 +72,3 @@ export const reducers = {
 };
 
 export const rootReducer = combineReducers(reducers);
-
-export default searchesReducer;
