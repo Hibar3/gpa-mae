@@ -8,10 +8,51 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import { Props } from "./props";
 import { PlaceType } from "../../common/types";
+import map from "lodash/map";
 
 export const AutoComplete: React.FC<Props> = (props) => {
   //===========VARIABLE
   const { isLoaded, value, options, onChange, onInputChange } = props;
+
+  //===========OPTIONS
+  const renderOptions = (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: PlaceType
+  ) => {
+    const matches = option?.structured_formatting?.main_text_matched_substrings;
+    const parts = parse(
+      option?.structured_formatting?.main_text,
+      map(matches, (match) => [match?.offset, match?.offset + match?.length])
+    );
+
+    return (
+      <li {...props}>
+        <Grid container alignItems="center">
+          <Grid item>
+            <Box
+              component={LocationOnIcon}
+              sx={{ color: "text.secondary", mr: 2 }}
+            />
+          </Grid>
+          <Grid item xs>
+            {parts.map((part, index) => (
+              <span
+                key={index}
+                style={{
+                  fontWeight: part.highlight ? 700 : 400,
+                }}
+              >
+                {part.text}
+              </span>
+            ))}
+            <Typography variant="body2" color="text.secondary">
+              {option.structured_formatting.secondary_text}
+            </Typography>
+          </Grid>
+        </Grid>
+      </li>
+    );
+  };
 
   //===========VIEW
   return (
@@ -36,45 +77,7 @@ export const AutoComplete: React.FC<Props> = (props) => {
       renderInput={(params) => (
         <TextField {...params} label="Search location" fullWidth />
       )}
-      renderOption={(props, option) => {
-        const matches =
-          option.structured_formatting.main_text_matched_substrings;
-        const parts = parse(
-          option.structured_formatting.main_text,
-          matches.map((match: any) => [
-            match.offset,
-            match.offset + match.length,
-          ])
-        );
-
-        return (
-          <li {...props}>
-            <Grid container alignItems="center">
-              <Grid item>
-                <Box
-                  component={LocationOnIcon}
-                  sx={{ color: "text.secondary", mr: 2 }}
-                />
-              </Grid>
-              <Grid item xs>
-                {parts.map((part, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      fontWeight: part.highlight ? 700 : 400,
-                    }}
-                  >
-                    {part.text}
-                  </span>
-                ))}
-                <Typography variant="body2" color="text.secondary">
-                  {option.structured_formatting.secondary_text}
-                </Typography>
-              </Grid>
-            </Grid>
-          </li>
-        );
-      }}
+      renderOption={renderOptions}
     />
   );
 };

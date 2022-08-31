@@ -1,5 +1,6 @@
+import { LatLng } from "react-google-places-autocomplete/build/GooglePlacesAutocomplete.types";
 import { Action } from "redux";
-import { PayloadedAction } from "../common/types";
+import { PayloadedAction, PlaceType } from "../common/types";
 
 export const FETCH_PLACES = "FETCH_PLACES";
 export const FETCH_PLACES_SUCCESS = "FETCH_PLACES_SUCCESS";
@@ -10,20 +11,7 @@ export const FETCH_GEO = "FETCH_GEO";
 export const FETCH_GEO_SUCCESS = "FETCH_GEO_SUCCESS";
 export const FETCH_GEO_FAILURE = "FETCH_GEO_FAILURE";
 
-export interface GoogleMapProps {
-  apiKey: string;
-  height: string;
-  searchPlaceHolder?: string;
-  overridePlace?: BasePlaceResult;
-  onPlaceChanged?: (placeResult: PlaceResult) => void;
-}
-
-export interface BasePlaceResult {
-  description: string;
-  place_id: string;
-}
-
-export interface PlaceResult extends BasePlaceResult {
+export interface PlaceResult extends PlaceType {
   matched_substrings: {
     length: number;
     offset: number;
@@ -32,21 +20,27 @@ export interface PlaceResult extends BasePlaceResult {
   types: string[];
 }
 
-export type HistoryPlaceResult = {payload: BasePlaceResult};
-export type InterestPlaceResult = BasePlaceResult;
+export type InitStatePlaces = {
+  description: string;
+  places: PlaceType[];
+  error?: string | null;
+};
+export type InitStateGeo = {
+  searchTerm: {
+    address: string;
+    placeId: string;
+    latLng: LatLng[];
+    error?: string | null;
+    coords: [];
+  };
+};
+export type SearchHistory = { searchTerm: PlaceType };
+export type PlaceAction =
+  | Action<"FETCH_PLACES">
+  | PayloadedAction<"FETCH_PLACES_SUCCESS", SearchHistory>
+  | PayloadedAction<"FETCH_PLACES_FAILURE", { error: string }>;
 
-export interface SearchMapState {
-  searchHistoryPlaces: HistoryPlaceResult[];
-  interestPlaces: InterestPlaceResult[];
-  isInterestPlacesLoading: boolean;
-  interestPlacesLoadError: string;
-}
-
-export type SearchMapActions =
-  | PayloadedAction<'FETCH_PLACES_SUCCESS', HistoryPlaceResult>
-  | Action<typeof FETCH_PLACES_SUCCESS>
-  | Action<typeof FETCH_PLACES_FAILURE>
-  | Action<typeof FETCH_GEO>
-  | Action<typeof FETCH_GEO_SUCCESS>
-  | Action<typeof FETCH_GEO_FAILURE>
-  | Action<typeof ON_RESET>
+export type GeoAction =
+  | Action<"FETCH_GEO">
+  | PayloadedAction<"FETCH_GEO_SUCCESS", InitStateGeo>
+  | PayloadedAction<"FETCH_GEO_FAILURE", { error: string }>;

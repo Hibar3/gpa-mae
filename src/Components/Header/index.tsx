@@ -3,35 +3,22 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Props } from "./props";
+import { styles } from "./style";
 
-export const Header: React.FC = () => {
+export const Header: React.FC<Props> = (props) => {
+  const { title } = props;
+
   //===========VIEW
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        style={{
-          color: "#000000",
-          backgroundColor: "#FFCC00",
-        }}
-      >
+      <AppBar position="static" style={styles.appbar}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontFamily: "Impact, fantasy",
-              fontSize: "34px",
-              fontWeight: "400",
-            }}
-          >
-            Maybank
+          <Typography variant="h6" component="div" sx={styles.title}>
+            {`${title || "Maybank"}`}
           </Typography>
-          <Button color="inherit">Login</Button>
           <IconButton
             size="large"
             edge="start"

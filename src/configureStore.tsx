@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { Action, applyMiddleware, compose } from "redux";
+import { Action, applyMiddleware } from "redux";
 import { routerMiddleware } from "connected-react-router";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import thunk, { ThunkAction } from "redux-thunk";
@@ -9,7 +9,6 @@ import { epicsMiddleware, loggerMiddleware } from "./middlewares";
 import history from "./common/history";
 
 const initialState = {};
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reduxMiddleware = applyMiddleware(epicsMiddleware, loggerMiddleware);
 export const store = configureStore({

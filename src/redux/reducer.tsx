@@ -2,14 +2,15 @@ import * as types from "./types";
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import history from "../common/history";
+import { GeoAction, InitStateGeo, InitStatePlaces, PlaceAction } from "./types";
 
-const INITIAL_STATE_PLACES = {
+const INITIAL_STATE_PLACES: InitStatePlaces = {
   description: "Kuala Lumpur",
   places: [],
   error: null,
 };
 
-const INITIAL_STATE_GEOCODE = {
+const INITIAL_STATE_GEOCODE: InitStateGeo = {
   searchTerm: {
     address: "Kuala Lumpur",
     placeId: "",
@@ -19,13 +20,10 @@ const INITIAL_STATE_GEOCODE = {
   },
 };
 
-const placesReducer = (
-  state = INITIAL_STATE_PLACES,
-  action: { type; payload }
-) => {
+const placesReducer = (state = INITIAL_STATE_PLACES, action: PlaceAction) => {
   switch (action.type) {
     case types.FETCH_PLACES_SUCCESS: {
-      const searchHistory = [action.payload?.searchTerm, ...state.places];
+      const searchHistory = [action.payload?.searchTerm, ...state?.places];
       return {
         ...state,
         description: action.payload?.searchTerm?.description,
@@ -43,13 +41,9 @@ const placesReducer = (
   }
 };
 
-const geocodingReducer = (
-  state = INITIAL_STATE_GEOCODE,
-  action: { type; payload }
-) => {
+const geocodingReducer = (state = INITIAL_STATE_GEOCODE, action: GeoAction) => {
   switch (action.type) {
     case types.FETCH_GEO_SUCCESS: {
-      console.log("FETCH_GEO_SUCCESS", action?.payload);
       const searchHistory = [
         action.payload?.searchTerm,
         ...state.searchTerm?.coords,
