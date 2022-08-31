@@ -1,10 +1,7 @@
-import { Unsubscribe } from "@reduxjs/toolkit";
-
 export type Props = {
-  places?: any[];
   isLoaded: boolean;
   options?: string[];
-  subscribe?: Unsubscribe;
   onPlaceChanged: (value?: { lat: number; lng: number }) => void;
+  onPressAddress: (input: string) => void;
   renderInput?: (value?: any) => void;
 };

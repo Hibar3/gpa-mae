@@ -1,5 +1,6 @@
 export type Props = {
   places?: PlaceType[];
+  onPressAddress: (input: string) => void;
 };
 
 export interface PlaceType {

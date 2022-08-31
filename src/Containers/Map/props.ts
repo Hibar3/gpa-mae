@@ -1,5 +1,6 @@
 export type Props = {
   isLoaded?: boolean;
+  style?: React.CSSProperties;
   position: {
     lat: number;
     lng: number;

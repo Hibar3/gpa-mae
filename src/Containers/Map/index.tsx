@@ -5,14 +5,14 @@ import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { Props } from "./props";
 
 const containerStyle = {
-  width: "50%",
+  width: "98%",
   height: "500px",
 };
 const center = { lat: -34.397, lng: 150.644 };
 
 export const CustomMap: React.FC<Props> = (props) => {
   //======VARIABLE
-  const { isLoaded, position } = props;
+  const { isLoaded, position, style } = props;
   const zoom = 4;
 
   //======STATES
@@ -29,7 +29,7 @@ export const CustomMap: React.FC<Props> = (props) => {
 
   return isLoaded ? (
     <GoogleMap
-      mapContainerStyle={containerStyle}
+      mapContainerStyle={style || containerStyle}
       center={position || center}
       zoom={zoom}
       onLoad={onLoad}

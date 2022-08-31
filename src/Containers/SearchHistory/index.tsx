@@ -13,7 +13,7 @@ const autocompleteService = { current: null };
 
 export const SearchHistory: React.FC<Props> = (props) => {
   //===========VARIABLE
-  const { isLoaded, onPlaceChanged } = props;
+  const { isLoaded, onPlaceChanged, onPressAddress } = props;
 
   //===========HOOKS
   const [value, setValue] = useState<PlaceType | null | undefined>();
@@ -100,7 +100,10 @@ export const SearchHistory: React.FC<Props> = (props) => {
         onChange={onChange}
         onInputChange={onInputChange}
       />
-      <SearchList places={searchHistory?.places} />
+      <SearchList
+        onPressAddress={onPressAddress}
+        places={searchHistory?.places}
+      />
     </div>
   );
 };

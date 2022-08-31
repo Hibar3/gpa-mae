@@ -16,8 +16,8 @@ export const AutoComplete: React.FC<Props> = (props) => {
   //===========VIEW
   return (
     <Autocomplete
-      id="google-map-demo"
-      sx={{ width: "50%" }}
+      id="google-place-autocomplete"
+      sx={{ width: "100%" }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option?.description
       }

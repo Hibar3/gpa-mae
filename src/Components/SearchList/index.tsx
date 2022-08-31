@@ -11,7 +11,7 @@ import { PlaceType } from "./props";
 
 export const SearchList: React.FC<Props> = (props) => {
   //===========VARIABLES
-  const { places } = props;
+  const { places, onPressAddress } = props;
 
   // remove  undefined values
   const filterPlaces = filter(places, (res) => {
@@ -20,12 +20,29 @@ export const SearchList: React.FC<Props> = (props) => {
 
   //===========VIEW
   return (
-    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <Box
+      sx={{
+        flex: 1,
+        width: "100%",
+        bgcolor: "background.paper",
+      }}
+    >
       <Divider />
       <nav aria-label="secondary mailbox folders">
         {map(filterPlaces, (i: PlaceType, index) => (
           <ListItem disablePadding key={`${i?.place_id}${index}`}>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => onPressAddress(i?.place_id || "")}
+              sx={{
+                flex: 1,
+                width: "100%",
+                bgcolor: "background.paper",
+                "&:hover": {
+                  color: "black",
+                  backgroundColor: "#FFCC00",
+                },
+              }}
+            >
               <ListItemText primary={i?.description} />
             </ListItemButton>
           </ListItem>
