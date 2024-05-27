@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { useJsApiLoader } from "@react-google-maps/api";
-import Header from "./components/Header";
-import CustomMap from "./containers/Map";
-import SearchHistory from "./containers/SearchHistory";
+import SearchHistory from "./Containers/SearchHistory";
+import CustomMap from "./Containers/Map";
+import Header from "./Components/Header";
 import { apiKey } from "./config";
 import { geocodeByPlaceId, getLatLng } from "react-google-places-autocomplete";
 

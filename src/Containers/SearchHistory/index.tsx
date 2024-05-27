@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Props } from "./props";
-import AutoComplete from "../../components/Autocomplete";
-import SearchList from "../../components/SearchList";
+import AutoComplete from "../../Components/Autocomplete";
+import SearchList from "../../Components/SearchList";
 import store from "../../configureStore";
 import { fetchGeoSuccess, fetchPlacesSuccess } from "../../redux/actions";
 import { getAutocomplete } from "../../api";
